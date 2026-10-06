@@ -18,7 +18,21 @@ CampusHaps.Client = Svelte frontend
 
 CampusHaps.Tests = NUnit tests
 
-# H
+### Folders to use
+- Models: Main application objects.
+- Data: Database-related classes.
+- Controllers: Handles API requests.
+- Services: Contains application/business logic.
+- Interfaces: Interfaces for services.
+- DTOs: Objects used to send/receive data through the API.
+- Extensions: Extension methods.
+- CampusHaps.Tests: NUnit tests.
+- CampusHaps.Client: Svelte frontend/UI.
+
+
+# Classes to Create Later
+- Services
+- Controllers
 
 
 
