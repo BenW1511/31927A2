@@ -1,6 +1,6 @@
 ﻿namespace CampusHaps.Api.Data
 {
-    public class AppDbContext
+    public class AppDbContext //ss
     {
     }
 }
