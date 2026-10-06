@@ -1,0 +1,6 @@
+@CampusHaps.Api_HostAddress = http://localhost:5188
+
+GET {{CampusHaps.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
