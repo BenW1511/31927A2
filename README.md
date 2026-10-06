@@ -22,4 +22,6 @@ Github:
 1) clone github repo 
 
 Zip File: 
-1) Unzip zip file 
+1) Unzip zip file
+
+2) Test
