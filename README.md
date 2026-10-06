@@ -8,6 +8,9 @@
 5. Click Commit All
 6. Click Push
 
+## How to open the Svelte Project (If you cant see it already)
+File -> Open Folder -> select CampusHaps.Client
+
 
 
 ## Project Structure
