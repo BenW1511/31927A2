@@ -1,6 +1,6 @@
 ﻿namespace CampusHaps.Api.Models
 {
-    public class ClubPost
+    public class ClubPost //Test
     {
     }
 }
