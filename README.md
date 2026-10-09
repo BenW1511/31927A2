@@ -56,5 +56,5 @@ CampusHaps.Tests = NUnit tests
 - Services
 - Controllers
 
-
+Aidan @ 09/10/2026 - Pushed the Event, User and EventVote models plus the EventType/EventStatus enums. User has Id, Name, Email, IsVerified, PasswordHash. EventVote has a unique index on UserId and EventId so users can only vote once per event.
 
