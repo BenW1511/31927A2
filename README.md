@@ -58,3 +58,6 @@ CampusHaps.Tests = NUnit tests
 
 Aidan @ 09/10/2026 - Pushed the Event, User and EventVote models plus the EventType/EventStatus enums. User has Id, Name, Email, IsVerified, PasswordHash. EventVote has a unique index on UserId and EventId so users can only vote once per event.
 
+Seni @ 09/10/2026 - Filled in properties for Club, ClubPost and Comment classes.
+
+
