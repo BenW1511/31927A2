@@ -2,7 +2,7 @@
 
 31927 Application Development with .NET Assignment 2
 
-Group Members Seniru Basnayake 24796500 Aiden Ramen 24749855 Benjamin Walters 24971095
+Group Members Seniru Basnayake 24796500 Aidan Ramen 24749855 Benjamin Walters 24971095
 
 Project Repository Link: https://github.com/BenW1511/31927A2.git
 
@@ -56,5 +56,5 @@ CampusHaps.Tests = NUnit tests
 - Services
 - Controllers
 
-
+Aidan @ 09/10/2026 - Pushed the Event, User and EventVote models plus the EventType/EventStatus enums. User has Id, Name, Email, IsVerified, PasswordHash. EventVote has a unique index on UserId and EventId so users can only vote once per event.
 
