@@ -1,8 +1,23 @@
-﻿namespace CampusHaps.Api.DTOs
-{
-    // Holds the event information we want to send to the frontend
-    // Used to control what event information gets sent
-    public class EventDto
-    {
+﻿using CampusHaps.Api.Enums;
+
+namespace CampusHaps.Api.DTOs{
+    //What the API sends back whenever events are displayed
+    //Includes calculated values so the frontend doesnt need to do it
+    public class EventDto{
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public string? TicketUrl { get; set; }
+        public EventType Type { get; set; }
+        public int? ClubId { get; set; }
+
+        //Calculated values, not stored in database
+        public EventStatus Status { get; set; }
+        public string? ClubName { get; set; }
+        public int VoteCount { get; set; }
+        public int CommentCount { get; set; }
     }
 }
