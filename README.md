@@ -60,8 +60,14 @@ Aidan @ 09/10/2026 - Pushed the Event, User and EventVote models plus the EventT
 
 Seni @ 09/10/2026 - Filled in properties for Club, ClubPost and Comment classes.
 
-
-Seni @ 09/10/2026 - Altered AppDbContext.cs
-
 Aidan @ 11/10/2026 - Added CreateEvent, Event, Login, Register, User and vote DTs with input validation
+
+Seni @ 11/10/2026 - Altered AppDbContext.cs
+
+Seni @ 12/10/2026 - Added database relationships, seed data, and setup
+
+**IMPORTANT** AS OF 12/10/2026:
+- The database is created using EnsureCreated() with sample seed data
+- After changing models or database relationships you should should pull the latest changes, delete their local campushaps.db, and rerun the API to recreate the database
+-  Deleting campushaps.db removes all local data but this is a temporary development workflow; EF Core migrations will be used later to update the schema without deleting the database
 
