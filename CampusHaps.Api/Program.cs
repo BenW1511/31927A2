@@ -20,6 +20,13 @@ builder.Services.AddCors(o => o.AddPolicy("Client", p =>
 
 var app = builder.Build();
 
+//create the database if it doesn't exist
+using (var scope = app.Services.CreateScope()) //creates a temporary scope for accessing services
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>(); //retrieves the database context
+    db.Database.EnsureCreated(); //creates the database and its tables if they dontexist
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

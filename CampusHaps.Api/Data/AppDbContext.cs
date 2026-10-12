@@ -1,6 +1,5 @@
 ﻿using CampusHaps.Api.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace CampusHaps.Api.Data
 {
@@ -62,6 +61,90 @@ namespace CampusHaps.Api.Data
             modelBuilder.Entity<EventVote>()
                 .HasIndex(v => new { v.UserId, v.EventId }) //creates a database index using the specified fields.
                 .IsUnique();
+
+            //seed some test users into the database
+            modelBuilder.Entity<User>().HasData( //HasData tells ef core to insert these records when the database is created or migrated 
+                new User //first test user
+                {
+                    Id = 1,
+                    Name = "Test Student 1",
+                    Email = "student1@example.com",
+                    IsVerified = true,
+                    PasswordHash = "PLACEHOLDER_HASH_1"
+                },
+                new User //second test user
+                {
+                    Id = 2,
+                    Name = "Test Studen 2",
+                    Email = "student2@exmaple.com",
+                    IsVerified = true,
+                    PasswordHash = "PLACEHOLDER_HASH_2"
+                }
+             );
+
+            //add starter/test data for the Club table
+            modelBuilder.Entity<Club>().HasData(
+                //first test club
+                new Club
+                {
+                    Id = 1,
+                    Name = "Ethan Society",
+                    Description = "A club for students who enjoy Ethan",
+                    Category = "Social",
+                    ContactEmail = "ethan@example.com"
+                },
+                //second test club
+                new Club
+                {
+                    Id = 2,
+                    Name = "Nero Society",
+                    Description = "A club for students who enjoy Nero",
+                    Category = "Social",
+                    ContactEmail = "nero@example.com"
+                }
+            );
+            //add starter/test data for the Event table
+            modelBuilder.Entity<Event>().HasData(
+                //first test event linked to club 1
+                new Event
+                {
+                    Id = 1,
+                    Title = "Get to know Ethan Night",
+                    Description = "A night to just understand and explore who Ethan is",
+                    Location = "Building 2",
+                    StartTime = new DateTime(2027, 3, 10, 14, 0, 0),
+                    EndTime = new DateTime(2027, 3, 10, 17, 0, 0),
+                    TicketUrl = null,
+                    Type = Enums.EventType.Social,
+                    ClubId = 1,
+                },
+                //second test event linked to club 2
+                new Event
+                {
+                    Id = 2,
+                    Title = "Nero's Gundam building day",
+                    Description = "Session to build some Gunpla/Gundam with Nero",
+                    Location = "Building 11",
+                    StartTime = new DateTime(2027, 3, 12, 10, 0, 0),
+                    EndTime = new DateTime(2027, 3, 12, 12, 0, 0),
+                    TicketUrl = null,
+                    Type = Enums.EventType.Sport,
+                    ClubId = 2,
+                },
+                //third test event with no club
+                new Event
+                {
+                    Id = 3,
+                    Title = "Pool Tournament",
+                    Description = "Bracket Tournament for 8 ball Pool",
+                    Location = "The Underground",
+                    StartTime = new DateTime(2027, 3, 15, 18, 0, 0),
+                    EndTime = new DateTime(2027, 3, 15, 21, 0, 0),
+                    TicketUrl = null,
+                    Type = Enums.EventType.Social,
+                    ClubId = null,
+                }
+            );
         }
 
 
