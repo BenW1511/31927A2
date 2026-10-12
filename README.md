@@ -61,3 +61,7 @@ Aidan @ 09/10/2026 - Pushed the Event, User and EventVote models plus the EventT
 Seni @ 09/10/2026 - Filled in properties for Club, ClubPost and Comment classes.
 
 
+Seni @ 09/10/2026 - Altered AppDbContext.cs
+
+Aidan @ 11/10/2026 - Added CreateEvent, Event, Login, Register, User and vote DTs with input validation
+
