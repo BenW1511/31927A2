@@ -67,3 +67,4 @@ Seni @ 12/10/2026 - Added database relationships, seed data, and setup
 - After changing models or database relationships you should should pull the latest changes, delete their local campushaps.db, and rerun the API to recreate the database
 -  Deleting campushaps.db removes all local data but this is a temporary development workflow; EF Core migrations will be used later to update the schema without deleting the database
 
+Seni @ 13/10/2026 - Created DTOs and service interfaces for Club and Comments, implemented Club and Comment services with database operations, validation, and sorting
