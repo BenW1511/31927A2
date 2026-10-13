@@ -69,4 +69,6 @@ Seni @ 11/10/2026 - Altered AppDbContext.cs
 
 Seni @ 12/10/2026 - Added database relationships, seed data, and setup
 
+Aidan @ 13/10/2026 - Added EventExtensions and event, vote and user service interfaces
+
 Seni @ 13/10/2026 - Created DTOs and service interfaces for Club and Comments, implemented Club and Comment services with database operations, validation, and sorting
