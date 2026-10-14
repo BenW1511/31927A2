@@ -72,3 +72,5 @@ Seni @ 12/10/2026 - Added database relationships, seed data, and setup
 Aidan @ 13/10/2026 - Added EventExtensions and event, vote and user service interfaces
 
 Seni @ 13/10/2026 - Created DTOs and service interfaces for Club and Comments, implemented Club and Comment services with database operations, validation, and sorting
+
+Seni @ 14/10/2026 - Implemented club and comment DTOs, interfaces, services, and API controllers, validation, and post/comment sorting.
