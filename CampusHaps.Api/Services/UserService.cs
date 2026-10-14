@@ -17,7 +17,14 @@ namespace CampusHaps.Api.Services
 
         public List<UserDto> GetAll()
         {
-            return _database.Users.OrderBy(u => u.Name).ToList().Select(u => ToDto(u)).ToList();
+            var users = _database.Users.OrderBy(u=>u.Name).ToList();
+            var result = new List<UserDto>();
+
+            foreach(var user in users)
+            {
+                result.Add(ToDto(user));
+            }
+            return result;
         }
 
         public UserDto? GetById(int id)
