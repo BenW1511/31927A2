@@ -1,12 +1,17 @@
 using CampusHaps.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using CampusHaps.Api.Interfaces;
+using CampusHaps.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddScoped<IClubService, ClubService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
