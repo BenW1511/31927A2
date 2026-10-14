@@ -33,14 +33,14 @@ namespace CampusHaps.Api.Data
             //configures the comment entity
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.Event)
-                .WithMany()
+                .WithMany(e => e.Comments)
                 .HasForeignKey(c => c.EventId)
                 .OnDelete(DeleteBehavior.Cascade);
             
             //configures the eventvote entity
             modelBuilder.Entity<EventVote>()
                 .HasOne(v => v.Event)
-                .WithMany()
+                .WithMany(e => e.Votes)
                 .HasForeignKey(v => v.EventId)
                 .OnDelete(DeleteBehavior.Cascade);
             

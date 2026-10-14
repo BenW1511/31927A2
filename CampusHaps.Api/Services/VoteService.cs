@@ -1,4 +1,7 @@
-﻿namespace CampusHaps.Api.Services
+﻿using CampusHaps.Api.Data;
+using CampusHaps.Api.Interfaces;
+
+namespace CampusHaps.Api.Services
 {
     // Handles the main voting logic
     // Used for adding and removing votes and checking if someone has already voted
