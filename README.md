@@ -51,6 +51,13 @@ CampusHaps.Tests = NUnit tests
 - CampusHaps.Tests: NUnit tests.
 - CampusHaps.Client: Svelte frontend/UI.
 
+- # IMPORTANT AS OF 12/10/2026:
+- The database is created using EnsureCreated() with sample seed data
+- After changing models or database relationships you should should pull the latest changes, delete their local campushaps.db, and rerun the API to recreate the database
+-  Deleting campushaps.db removes all local data but this is a temporary development workflow; EF Core migrations will be used later to update the schema without deleting the database
+
+  ---------------------------------------------------------
+
 
 Aidan @ 09/10/2026 - Pushed the Event, User and EventVote models plus the EventType/EventStatus enums. User has Id, Name, Email, IsVerified, PasswordHash. EventVote has a unique index on UserId and EventId so users can only vote once per event.
 
@@ -62,8 +69,8 @@ Seni @ 11/10/2026 - Altered AppDbContext.cs
 
 Seni @ 12/10/2026 - Added database relationships, seed data, and setup
 
-# IMPORTANT AS OF 12/10/2026:
-- The database is created using EnsureCreated() with sample seed data
-- After changing models or database relationships you should should pull the latest changes, delete their local campushaps.db, and rerun the API to recreate the database
--  Deleting campushaps.db removes all local data but this is a temporary development workflow; EF Core migrations will be used later to update the schema without deleting the database
+Aidan @ 13/10/2026 - Added EventExtensions and event, vote and user service interfaces
 
+Seni @ 13/10/2026 - Created DTOs and service interfaces for Club and Comments, implemented Club and Comment services with database operations, validation, and sorting
+
+Seni @ 14/10/2026 - Implemented club and comment DTOs, interfaces, services, and API controllers, validation, and post/comment sorting.
