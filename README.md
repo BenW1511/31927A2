@@ -74,3 +74,5 @@ Aidan @ 13/10/2026 - Added EventExtensions and event, vote and user service inte
 Seni @ 13/10/2026 - Created DTOs and service interfaces for Club and Comments, implemented Club and Comment services with database operations, validation, and sorting
 
 Seni @ 14/10/2026 - Implemented club and comment DTOs, interfaces, services, and API controllers, validation, and post/comment sorting.
+
+Aidan @ 14/10/2026 - Implemented EventsService, VoteService, UserService
