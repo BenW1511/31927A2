@@ -10,7 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IClubService, ClubService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
-
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IVoteService, VoteService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
