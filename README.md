@@ -76,3 +76,8 @@ Seni @ 13/10/2026 - Created DTOs and service interfaces for Club and Comments, i
 Seni @ 14/10/2026 - Implemented club and comment DTOs, interfaces, services, and API controllers, validation, and post/comment sorting.
 
 Aidan @ 14/10/2026 - Implemented EventsService, VoteService, UserService
+
+Aidan @ 15/10/2026 - Added event, vote and user controllers and register services
+
+Seni @ 15/10/2026 - Created and ran 16 unit tests for ClubService and CommentService, testing club management, posts, comments, and ownership permissions using an in-memory database
+
