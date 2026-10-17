@@ -31,7 +31,10 @@ namespace CampusHaps.Api.Services
             {
                 query = query.Where(e=>e.ClubId == clubId.Value);
             }
-            var events = query.OrderBy(e =>e.StartTime).ToList();
+            var events = query
+                .OrderBy(e =>e.StartTime)
+                .ToList();
+
             var result = new List<EventDto>();
 
             foreach(var ev in events)
@@ -60,7 +63,10 @@ namespace CampusHaps.Api.Services
                 throw new ArgumentException("The end of the date range must be after the start");
             }
             //only returns events that overlap by selecting ones that start before the range ends and ends before the range starts
-            var events = EventsWithDetails().Where(e=>e.StartTime < to && e.EndTime > from).OrderBy(e=>e.StartTime).ToList();
+            var events = EventsWithDetails()
+                .Where(e=>e.StartTime < to && e.EndTime > from)
+                .OrderBy(e=>e.StartTime)
+                .ToList();
 
             var result = new List<EventDto>(); 
             
