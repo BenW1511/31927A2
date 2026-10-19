@@ -2,8 +2,8 @@
 
 namespace CampusHaps.Api.Interfaces
 {
-    // Defines what the CommentService should be able to do
-    // Contains the method definitions for working with comments
+    //defines what the CommentService should be able to do
+    //contains the method definitions for working with comments
     public interface ICommentService
     {
         IEnumerable<CommentDto>? GetForEvent(int eventId); //null if event not found

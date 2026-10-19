@@ -2,9 +2,9 @@
 
 namespace CampusHaps.Api.Models
 {
-    // Represents a comment made by a user on an event
-    // Used so users can discuss events
-    // Should have ID content date/time user ID and event ID
+    //represents a comment made by a user on an event
+    //used so users can discuss events
+    //should have ID content date/time user ID and event ID
     public class Comment
     {
         public int Id { get; set; }

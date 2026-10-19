@@ -5,7 +5,7 @@ using CampusHaps.Api.Models;
 
 namespace CampusHaps.Api.Services
 {
-    //Handles the main user related logic, used for creating finding and managing users
+    //handles the main user related logic, used for creating finding and managing users
     public class UserService : IUserService
     {
         private readonly AppDbContext _database;

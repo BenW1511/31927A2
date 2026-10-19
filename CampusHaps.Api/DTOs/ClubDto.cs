@@ -1,7 +1,7 @@
 ﻿namespace CampusHaps.Api.DTOs
 {
-    // Holds the club information we want to send to the frontend
-    // Used to control what club information gets sent
+    //holds the club information we want to send to the frontend
+    //used to control what club information gets sent
     public class ClubDto //defines the information the API sends to the frontend when displaying a club
     {
         public int Id { get; set; }

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CampusHaps.Api.Controllers
 {
-    // Handles requests from the frontend related to clubs
-    // Used to get create update and delete clubs
+    //handles requests from the frontend related to clubs
+    //used to get create update and delete clubs
 
     [ApiController] //marks this class as a an api controller
     [Route("api/clubs")] //sets the base url path for all endpoints onto this controller

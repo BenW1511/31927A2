@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CampusHaps.Api.Controllers
 {
-    // Handles requests from the frontend related to votes, used to add remove and check votes
+    //handles requests from the frontend related to votes used to add remove and check votes
 
     [ApiController]
     [Route("api/events/{eventId}/votes")]
@@ -20,7 +20,7 @@ namespace CampusHaps.Api.Controllers
             _votes = votes;
         }
 
-        //Get /api/events/5/votes and returns the vote count and if the user voted
+        //get /api/events/5/votes and returns the vote count and if the user voted
         [HttpGet]
         public IActionResult GetVotes(int eventId, int? userId)
         {

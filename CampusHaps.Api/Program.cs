@@ -5,7 +5,7 @@ using CampusHaps.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IClubService, ClubService>();
@@ -17,11 +17,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Database
+//database
 builder.Services.AddDbContext<AppDbContext>(o =>
     o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
-// Let the Svelte dev server call the API
+//let the Svelte dev server call the API
 builder.Services.AddCors(o => o.AddPolicy("Client", p =>
     p.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod()));
 
@@ -34,7 +34,7 @@ using (var scope = app.Services.CreateScope()) //creates a temporary scope for a
     db.Database.EnsureCreated(); //creates the database and its tables if they dontexist
 }
 
-// Configure the HTTP request pipeline.
+//configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

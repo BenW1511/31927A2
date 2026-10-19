@@ -1,5 +1,5 @@
 ﻿namespace CampusHaps.Api.DTOs{
-    //Holds the user information that can be safely sent to the frontend
+    //holds the user information that can be safely sent to the frontend
 
     public class UserDto{
         public int Id { get; set; }

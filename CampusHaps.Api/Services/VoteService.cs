@@ -4,7 +4,7 @@ using CampusHaps.Api.Models;
 
 namespace CampusHaps.Api.Services
 {
-    //Handles the main voting logic, this is used for adding and removing votes and checking if someone has already voted
+    //handles the main voting logic this is used for adding and removing votes and checking if someone has already voted
     public class VoteService : IVoteService
     {
         private readonly AppDbContext _database;

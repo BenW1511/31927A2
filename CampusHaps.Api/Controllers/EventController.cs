@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CampusHaps.Api.Controllers
 {
-    // Handles requests from the frontend related to events
-    // Used to get create update delete and filter events
+    //handles requests from the frontend related to events
+    //used to get create update delete and filter events
     [ApiController]
     [Route("api/events")]
     public class EventController : ControllerBase
@@ -24,7 +24,7 @@ namespace CampusHaps.Api.Controllers
             return Ok(_events.GetAll(type, ClubId));
         }
 
-        // GET /api/events/5, id should only match numbers so caledndar isnt accidentally taken as an ID
+        //get /api/events/5, id should only match numbers so caledndar isnt accidentally taken as an ID
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CampusHaps.Api.Controllers
 {
-    // Handles requests from the frontend related to users
-    // Used for things like registering and finding users
+    //handles requests from the frontend related to users
+    //used for things like registering and finding users
     [ApiController]
     [Route("api/users")]
     public class UserController : ControllerBase

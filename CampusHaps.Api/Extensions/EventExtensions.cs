@@ -3,9 +3,9 @@ using CampusHaps.Api.Enums;
 using CampusHaps.Api.Models;
 
 namespace CampusHaps.Api.Extensions{
-    // Contains useful extra methods for Events
+    //contains useful extra methods for Events
     public static class EventExtensions{
-        //Retrieves event status by comparing start and end times to the current time
+        //retrieves event status by comparing start and end times to the current time
         public static EventStatus GetStatus (this Event e)
         {
             var now = DateTime.Now;
@@ -26,7 +26,7 @@ namespace CampusHaps.Api.Extensions{
                 
            }
 
-        //Converts an Event into an EventDto, the event must be loaded with .Include() for Club, Votes and Comments otherwise the ClubName will be null and counts will be 0
+        //converts an Event into an eventdto the event must be loaded with .Include() for club votes and comments otherwise the clubname will be null and counts will be 0
         public static EventDto ToDto(this Event e) {
             string? clubName;
             if(e.Club != null)

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CampusHaps.Api.Controllers
 {
-    //Handles requests from the frontend related to comments
-    //Used to add get update and delete comments
+    //handles requests from the frontend related to comments
+    //used to add get update and delete comments
 
     [ApiController]
     [Route("api/events/{eventId}/comments")] //sets the base URL path for all endpoints in this controller

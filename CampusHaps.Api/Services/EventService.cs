@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CampusHaps.Api.Services
 {
-    //Handles the main event related logic and is used for getting,creating, updating, deleting and filtering events
+    //handles the main event related logic and is used for getting,creating updating, deleting and filtering events
 
     public class EventService : IEventService {
 
@@ -16,7 +16,7 @@ namespace CampusHaps.Api.Services
 
         public EventService(AppDbContext db) { _database = db; }
 
-        //Starting query for events with the associated club, votes and comments loaded so ClubName, VoteCount and CommentCount are correct in the DTO
+        //starting query for events with the associated club votes and comments loaded so ClubName VoteCount and CommentCount are correct in the DTO
         private IQueryable<Event> EventsWithDetails() {  return _database.Events.Include(e=>e.Club).Include(e=>e.Votes).Include(e=>e.Comments); }
 
         public List<EventDto> GetAll(EventType? type, int? clubId)

@@ -2,8 +2,8 @@
 
 namespace CampusHaps.Api.Models
 {
-    //Represents a user's vote on an event
-    //The unique index below means the database rejects a second vote from the same user on the same event
+    //represents a users vote on an event
+    //the unique index below means the database rejects a second vote from the same user on the same event
    
     [Index(nameof(UserId), nameof(EventId), IsUnique = true)]
     public class EventVote

@@ -3,8 +3,8 @@ using CampusHaps.Api.Enums;
 
 namespace CampusHaps.Api.Models
 {
-    //Represents a campus event that students can discover and interact with
-    //Used to display events in the feed and calendar
+    //represents a campus event that students can discover and interact with
+    //used to display events in the feed and calendar
     public class Event
     {
         public int Id { get; set; }

@@ -1,8 +1,8 @@
 ﻿using CampusHaps.Api.Enums;
 
 namespace CampusHaps.Api.DTOs{
-    //What the API sends back whenever events are displayed
-    //Includes calculated values so the frontend doesnt need to do it
+    //what the API sends back whenever events are displayed
+    //includes calculated values so the frontend doesnt need to do it
     public class EventDto{
         public int Id { get; set; }
         public string Title { get; set; } = string.Empty;
@@ -14,7 +14,7 @@ namespace CampusHaps.Api.DTOs{
         public EventType Type { get; set; }
         public int? ClubId { get; set; }
 
-        //Calculated values, not stored in database
+        //calculated values, not stored in database
         public EventStatus Status { get; set; }
         public string? ClubName { get; set; }
         public int VoteCount { get; set; }

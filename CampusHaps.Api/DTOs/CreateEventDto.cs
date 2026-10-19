@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CampusHaps.Api.Enums;
-//Stores the information needed when creating an event
-//What the frontend sends when creating or updating an event
+//stores the information needed when creating an event
+//what the frontend sends when creating or updating an event
 namespace CampusHaps.Api.DTOs
 {
    public class CreateEventDto  {
