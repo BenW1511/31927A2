@@ -19,6 +19,27 @@ Unzip zip file
 
 Test
 
+# CampusHaps – How to Run
+
+**Requirements:** Visual Studio 2022, .NET 9 SDK, Node.js 18+
+
+**Backend**
+1. Open `CampusHaps.sln`
+2. Set `CampusHaps.Api` as the startup project and run it with the **https** profile
+3. Swagger: https://localhost:7011/swagger (the database is created automatically)
+
+**Frontend** (with the API running)
+```
+cd CampusHaps.Client
+npm install
+npm run dev
+```
+Open http://localhost:5173
+
+**Tests:** Test → Test Explorer → Run All
+
+**Note:** Register with a `.edu.au` email to log in. To reset the data, delete `campushaps.db` and rerun the API
+
 # The GitHub Workflow
 1. Before starting a session, do Git -> Pull
 2. Add Code or changes
