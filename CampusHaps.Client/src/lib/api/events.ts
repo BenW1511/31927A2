@@ -40,7 +40,7 @@ export async function toggleVote(
   const safeUserId = parseInt(String(userId), 10) || 1;
 
   if (currentlyVoted) {
-    // Already upvoted -> Remove vote via DELETE
+    // Already upvoted then remove vote via DELETE
     try {
       const res = await apiFetch<{ count: number }>(`/api/events/${eventId}/votes?userId=${safeUserId}`, {
         method: 'DELETE'
@@ -51,7 +51,7 @@ export async function toggleVote(
       throw err;
     }
   } else {
-    // Not upvoted yet -> Add vote via POST
+    // Not upvoted yet then add vote via POST
     try {
       const res = await apiFetch<{ count: number }>(`/api/events/${eventId}/votes`, {
         method: 'POST',
