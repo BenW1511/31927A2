@@ -41,7 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+//<>ben changed this
 
 app.UseCors("Client");
 
