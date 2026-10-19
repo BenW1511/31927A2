@@ -4,18 +4,7 @@
 
 Group Members Seniru Basnayake 24796500 Aidan Ramen 24749855 Benjamin Walters 24971095
 
-Planned Tech Stack: Front End: SvelteKit Back End: C# Database: MySQL External API:
-
 Brief Project Description: Student Social Event Social Media
-
-Operational Instructions: Github:
-
-clone github repo
-Zip File:
-
-Unzip zip file
-
-Test
 
 # CampusHaps – How to Run
 
