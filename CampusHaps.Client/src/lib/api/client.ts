@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://localhost:7011';
+const API_BASE_URL = 'http://localhost:5188';
 
 export async function apiFetch<T>(endpoint: string, options?: RequestInit): Promise<T> {
   const config: RequestInit = {

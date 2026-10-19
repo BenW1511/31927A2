@@ -1,142 +1,162 @@
 <script lang="ts">
   import { createClub } from '../../api/clubs';
 
-  let { isOpen = false, onclose, onclubCreated } = $props();
-
-  let name = $state('');
-  let category = $state('Technology');
-  let contactEmail = $state('');
-  let description = $state('');
-
-  let errorMessage = $state('');
-  let isSubmitting = $state(false);
-
-  function closeModal() {
-    errorMessage = '';
-    if (onclose) onclose();
+  interface Props {
+    isOpen: boolean;
+    onclose: () => void;
+    onclubCreated: () => void;
   }
 
-  async function handleSubmit(e: Event) {
+  let { isOpen, onclose, onclubCreated }: Props = $props();
+
+  let name = $state('');
+  let category = $state('Social');
+  let contactEmail = $state('');
+  let description = $state('');
+  let errorMessage = $state('');
+  let isLoading = $state(false);
+
+  const categories = [
+    'Social',
+    'Technology',
+    'Academic',
+    'Arts & Culture',
+    'Sports & Fitness',
+    'Social & Special Interest'
+  ];
+
+  async function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
     errorMessage = '';
 
-    if (!name.trim() || !contactEmail.trim() || !description.trim()) {
-      errorMessage = 'Please complete all required fields before submitting.';
+    if (!name.trim() || !contactEmail.trim()) {
+      errorMessage = 'Please provide a club name and contact email.';
       return;
     }
 
-    isSubmitting = true;
+    isLoading = true;
 
     try {
-      const newClub = await createClub({
+      await createClub({
         name: name.trim(),
         category,
         contactEmail: contactEmail.trim(),
         description: description.trim()
       });
 
+      // Reset form fields
       name = '';
-      category = 'Technology';
+      category = 'Social';
       contactEmail = '';
       description = '';
 
-      if (onclubCreated) onclubCreated(newClub);
-      closeModal();
-      alert('Campus club created successfully!');
+      onclubCreated();
+      onclose();
     } catch (err: any) {
-      errorMessage = err?.message || 'Failed to create club. Please try again.';
+      errorMessage = err?.message || 'Failed to create club.';
     } finally {
-      isSubmitting = false;
+      isLoading = false;
     }
   }
 </script>
 
 {#if isOpen}
-  <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 border border-gray-200">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold text-gray-900">Create New Campus Club</h2>
-        <button
-          onclick={closeModal}
-          class="text-gray-400 hover:text-gray-600 font-bold text-lg"
-          aria-label="Close modal"
-        >
-          &times;
-        </button>
-      </div>
+  <div style="position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 1rem;">
+    <div style="background: #ffffff; border: 1px solid #d1d5db; border-radius: 0.5rem; width: 100%; max-width: 480px; padding: 1.75rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); position: relative; text-align: left;">
+      
+      <!-- Close Button -->
+      <button
+        type="button"
+        onclick={onclose}
+        style="position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; font-size: 1.25rem; font-weight: 700; color: #6b7280; cursor: pointer;"
+      >
+        ✕
+      </button>
+
+      <h2 style="font-size: 1.5rem; font-weight: 800; color: #111827; margin: 0 0 1.25rem 0; text-align: center;">
+        Create New Campus Club
+      </h2>
 
       {#if errorMessage}
-        <div class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
+        <div style="padding: 0.75rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 0.375rem; font-size: 0.85rem; margin-bottom: 1rem;">
           {errorMessage}
         </div>
       {/if}
 
-      <form onsubmit={handleSubmit} class="space-y-4">
+      <form onsubmit={handleSubmit} style="display: flex; flex-direction: column; gap: 1rem;">
         <div>
-          <label for="club-name" class="block text-sm font-medium text-gray-700 mb-1">Club Name</label>
+          <label for="clubName" style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
+            Club Name
+          </label>
           <input
-            id="club-name"
+            id="clubName"
             type="text"
             bind:value={name}
             placeholder="e.g. UTS Vibe Coding Society"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none; box-sizing: border-box;"
           />
         </div>
 
         <div>
-          <label for="club-category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+          <label for="category" style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
+            Category
+          </label>
           <select
-            id="club-category"
+            id="category"
             bind:value={category}
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; background: #ffffff; outline: none; box-sizing: border-box;"
           >
-            <option value="Technology">Technology</option>
-            <option value="Academic">Academic</option>
-            <option value="Arts & Culture">Arts & Culture</option>
-            <option value="Sports & Fitness">Sports & Fitness</option>
-            <option value="Social & Special Interest">Social & Special Interest</option>
+            {#each categories as cat}
+              <option value={cat}>{cat}</option>
+            {/each}
           </select>
         </div>
 
         <div>
-          <label for="club-email" class="block text-sm font-medium text-gray-700 mb-1">Contact Email</label>
+          <label for="contactEmail" style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
+            Contact Email
+          </label>
           <input
-            id="club-email"
+            id="contactEmail"
             type="email"
             bind:value={contactEmail}
             placeholder="e.g. contact@society.edu.au"
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none; box-sizing: border-box;"
           />
         </div>
 
         <div>
-          <label for="club-description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label for="description" style="display: block; font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
+            Description
+          </label>
           <textarea
-            id="club-description"
+            id="description"
             rows="3"
             bind:value={description}
             placeholder="Brief overview of the club..."
-            class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none; box-sizing: border-box; resize: vertical;"
           ></textarea>
         </div>
 
-        <div class="flex justify-end space-x-2 pt-2">
+        <!-- Action Buttons: Clear background, black text, clean borders -->
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
           <button
             type="button"
-            onclick={closeModal}
-            class="px-4 py-2 border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50"
+            onclick={onclose}
+            style="background-color: #ffffff; color: #000000; border: 1px solid #d1d5db; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 600; cursor: pointer;"
           >
             Cancel
           </button>
           <button
             type="submit"
-            disabled={isSubmitting}
-            class="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm font-medium hover:bg-indigo-700 disabled:opacity-50"
+            disabled={isLoading}
+            style="background-color: #ffffff; color: #000000; border: 1px solid #000000; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 700; cursor: pointer;"
           >
-            {isSubmitting ? 'Creating...' : 'Create Club'}
+            {isLoading ? 'Creating...' : 'Create Club'}
           </button>
         </div>
       </form>
+
     </div>
   </div>
 {/if}

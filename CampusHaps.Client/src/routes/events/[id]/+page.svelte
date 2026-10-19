@@ -100,16 +100,7 @@
       comments = [newComment, ...comments];
       commentText = '';
     } catch (err: any) {
-      try {
-        const parsed = JSON.parse(err.message);
-        if (parsed?.errors) {
-          commentError = Object.values(parsed.errors).flat().join(' ');
-        } else {
-          commentError = err.message;
-        }
-      } catch {
-        commentError = err?.message || 'Failed to post comment.';
-      }
+      commentError = err?.message || 'Failed to post comment.';
     } finally {
       isSubmitting = false;
     }
@@ -121,7 +112,6 @@
     return isNaN(d.getTime()) ? 'TBA' : d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
-  // Resolves the link: uses custom ticketUrl if populated, or falls back to club route/search
   let targetUrl = $derived(() => {
     if (!event) return '#';
     const rawUrl = (event as any).ticketUrl || (event as any).ticket_url;
@@ -133,95 +123,110 @@
   onMount(loadEventData);
 </script>
 
-{#if isLoading}
-  <div class="text-center py-12 text-gray-500 text-sm">Loading event details...</div>
-{:else if errorMsg || !event}
-  <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
-    {errorMsg || 'Event not found.'}
-  </div>
-{:else}
-  <div class="space-y-8 max-w-3xl mx-auto">
-    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-4">
-      <div class="flex justify-between items-start">
-        <div>
-          <span class="text-xs font-semibold text-indigo-600 uppercase tracking-wide">
-            {event.clubName || 'Campus Event'}
-          </span>
-          <h1 class="text-3xl font-bold text-gray-900 mt-1">{event.title}</h1>
-        </div>
-        <button
-          onclick={handleVote}
-          class="flex items-center space-x-1.5 px-3 py-1.5 border border-indigo-200 rounded-md text-sm font-medium transition {event.userVoted ? 'bg-indigo-600 text-white' : 'text-indigo-600 hover:bg-indigo-50'}"
-        >
-          <span>▲ Upvote</span>
-          <span class="{event.userVoted ? 'bg-indigo-700 text-white' : 'bg-indigo-100'} px-2 py-0.5 rounded text-xs">{event.upvotes || 0}</span>
-        </button>
-      </div>
-
-      <p class="text-gray-700 whitespace-pre-line">{event.description}</p>
-
-      <div class="flex flex-wrap items-center justify-between gap-4 text-sm text-gray-500 pt-4 border-t border-gray-100">
-        <div class="space-y-1">
-          <div>📍 <strong>Location:</strong> {event.location}</div>
-          <div>📅 <strong>Time:</strong> {formatDate(event.startTime || (event as any).date)}</div>
-        </div>
-
-        <a
-          href={targetUrl()}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-md text-sm transition shadow-sm"
-        >
-          <span>🔗 Open Event Link / Tickets</span>
-        </a>
-      </div>
+<!-- Centered and Expanded Layout Container -->
+<div style="max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; width: 100%; box-sizing: border-box;">
+  {#if isLoading}
+    <div style="text-align: center; padding: 3rem 0; color: #6b7280; font-size: 0.875rem;">Loading event details...</div>
+  {:else if errorMsg || !event}
+    <div style="padding: 1rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 0.375rem; font-size: 0.875rem;">
+      {errorMsg || 'Event not found.'}
     </div>
-
-    <!-- Event Discussion Section -->
-    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm space-y-4">
-      <h2 class="text-xl font-bold text-gray-900">Event Discussion</h2>
-
-      {#if commentError}
-        <div class="p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
-          {commentError}
-        </div>
-      {/if}
-
-      {#if !$currentUser}
-        <p class="text-sm text-gray-500">You must be logged in to participate in the event discussion.</p>
-      {:else}
-        <form onsubmit={handlePostComment} class="space-y-3">
-          <textarea
-            rows="3"
-            bind:value={commentText}
-            placeholder="Share your thoughts about this event..."
-            class="w-full border border-gray-300 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          ></textarea>
+  {:else}
+    <div style="display: flex; flex-direction: column; gap: 2rem; width: 100%;">
+      
+      <!-- Event Header Card -->
+      <div style="background: #ffffff; border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: left; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+          <div>
+            <span style="font-size: 0.85rem; font-weight: 700; color: #4f46e5; text-transform: uppercase; tracking-wide;">
+              {event.clubName || 'Campus Event'}
+            </span>
+            <h1 style="font-size: 2.25rem; font-weight: 800; color: #111827; margin: 0.25rem 0 0 0;">{event.title}</h1>
+          </div>
           <button
-            type="submit"
-            disabled={isSubmitting}
-            class="px-4 py-2 bg-indigo-600 text-white font-medium text-sm rounded-md hover:bg-indigo-700 disabled:opacity-50"
+            onclick={handleVote}
+            style="background-color: #ffffff; color: #000000; border: 1px solid #d1d5db; padding: 0.4rem 0.85rem; border-radius: 0.375rem; font-size: 0.875rem; font-weight: 600; cursor: pointer;"
           >
-            {isSubmitting ? 'Posting...' : 'Post Comment'}
+            ▲ Upvote {event.upvotes || 0}
           </button>
-        </form>
-      {/if}
+        </div>
 
-      <div class="space-y-3 pt-4 border-t border-gray-100">
-        {#if comments.length === 0}
-          <p class="text-sm text-gray-500">No comments yet. Be the first to start the conversation!</p>
-        {:else}
-          {#each comments as comment (comment.id)}
-            <div class="bg-gray-50 p-4 rounded-md border border-gray-100 space-y-1">
-              <div class="flex justify-between items-center text-xs text-gray-500">
-                <span class="font-semibold text-gray-700">{comment.userName || 'Student'}</span>
-                <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
-              </div>
-              <p class="text-sm text-gray-800 whitespace-pre-line">{comment.content}</p>
-            </div>
-          {/each}
-        {/if}
+        <p style="color: #374151; font-size: 1rem; line-height: 1.6; margin: 0 0 1.5rem 0; white-space: pre-line;">
+          {event.description}
+        </p>
+
+        <div style="padding-top: 1.25rem; border-top: 1px solid #e5e7eb; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.9rem; color: #4b5563;">
+          <div style="display: flex; gap: 2rem;">
+            <div>📍 <strong>Location:</strong> {event.location}</div>
+            <div>📅 <strong>Time:</strong> {formatDate(event.startTime || (event as any).date)}</div>
+          </div>
+
+          <a
+            href={targetUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            style="background-color: #ffffff; color: #000000; border: 1px solid #000000; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 700; font-size: 0.875rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;"
+          >
+            <span>🔗 Open Event Link / Tickets</span>
+          </a>
+        </div>
       </div>
+
+      <!-- Event Discussion Section -->
+      <div style="background: #ffffff; border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); text-align: left; width: 100%; box-sizing: border-box;">
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: #111827; margin: 0 0 1.25rem 0;">Event Discussion</h2>
+
+        {#if commentError}
+          <div style="padding: 0.75rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 0.375rem; font-size: 0.85rem; margin-bottom: 1.25rem;">
+            {commentError}
+          </div>
+        {/if}
+
+        {#if !$currentUser}
+          <div style="padding: 1rem; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.375rem; font-size: 0.875rem; color: #6b7280; margin-bottom: 1.5rem;">
+            You must be logged in to participate in the event discussion.
+          </div>
+        {:else}
+          <form onsubmit={handlePostComment} style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem;">
+            <textarea
+              rows="3"
+              bind:value={commentText}
+              placeholder="Share your thoughts about this event..."
+              style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.85rem; font-size: 0.9rem; outline: none; box-sizing: border-box; resize: vertical;"
+            ></textarea>
+            <div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                style="background-color: #ffffff; color: #000000; border: 1px solid #000000; padding: 0.5rem 1.25rem; border-radius: 0.375rem; font-weight: 700; font-size: 0.875rem; cursor: pointer;"
+              >
+                {isSubmitting ? 'Posting...' : 'Post Comment'}
+              </button>
+            </div>
+          </form>
+        {/if}
+
+        <!-- Comments Feed: Each comment placed inside an individual styled card box -->
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          {#if comments.length === 0}
+            <p style="font-size: 0.875rem; color: #6b7280; margin: 0;">No comments yet. Be the first to start the conversation!</p>
+          {:else}
+            {#each comments as comment (comment.id)}
+              <div style="background: #ffffff; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 1rem 1.25rem; box-shadow: 0 1px 2px rgba(0,0,0,0.02);">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #6b7280; margin-bottom: 0.5rem;">
+                  <strong style="color: #111827; font-size: 0.875rem;">{comment.userName || 'Student'}</strong>
+                  <span>{new Date(comment.createdAt).toLocaleDateString()}</span>
+                </div>
+                <p style="font-size: 0.9rem; color: #374151; margin: 0; line-height: 1.5; white-space: pre-line;">
+                  {comment.content}
+                </p>
+              </div>
+            {/each}
+          {/if}
+        </div>
+
+      </div>
+
     </div>
-  </div>
-{/if}
+  {/if}
+</div>

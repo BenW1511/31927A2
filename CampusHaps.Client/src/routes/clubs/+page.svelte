@@ -37,7 +37,6 @@
 
   onMount(loadClubs);
 
-  // Filter clubs by search query and selected category
   let filteredClubs = $derived(
     clubs.filter((club) => {
       const q = searchQuery.toLowerCase();
@@ -55,57 +54,59 @@
   );
 </script>
 
-<div class="space-y-6">
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <h1 class="text-3xl font-bold text-gray-900">Campus Clubs</h1>
-      <p class="text-gray-600 text-sm">Explore active university societies and student groups.</p>
+<!-- Center Aligned Container -->
+<div style="max-width: 1000px; margin: 0 auto; padding: 1.5rem; text-align: center;">
+  
+  <div style="margin-bottom: 1.5rem;">
+    <h1 style="font-size: 2.25rem; font-weight: 800; color: #111827; margin-bottom: 0.25rem;">Campus Clubs</h1>
+    <p style="color: #4b5563; font-size: 0.95rem;">Explore active university societies and student groups.</p>
+    
+    <!-- White background, black font Create Club button -->
+    <div style="margin-top: 1rem;">
+      <button
+        onclick={() => (isModalOpen = true)}
+        style="background-color: #ffffff; color: #000000; border: 1px solid #d1d5db; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: background-color 0.2s;"
+        onmouseover={(e) => (e.currentTarget.style.backgroundColor = '#f9fafb')}
+        onmouseleave={(e) => (e.currentTarget.style.backgroundColor = '#ffffff')}
+      >
+        + Create New Club
+      </button>
     </div>
-    <button
-      onclick={() => (isModalOpen = true)}
-      class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-4 py-2 rounded-md text-sm shadow-sm transition"
-    >
-      + Create New Club
-    </button>
   </div>
 
-  <!-- Filter & Search Controls -->
-  <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-    <div class="flex-grow">
-      <input
-        type="text"
-        bind:value={searchQuery}
-        placeholder="Search clubs by name or keywords..."
-        class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
-    </div>
+  <!-- Search and Category Filters -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+    <input
+      type="text"
+      bind:value={searchQuery}
+      placeholder="Search clubs by name or keywords..."
+      style="width: 100%; max-width: 380px; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none;"
+    />
 
-    <div class="w-full sm:w-56">
-      <select
-        bind:value={selectedCategory}
-        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      >
-        {#each categories as category}
-          <option value={category}>{category === 'All' ? 'All Categories' : category}</option>
-        {/each}
-      </select>
-    </div>
+    <select
+      bind:value={selectedCategory}
+      style="border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; background: #ffffff; outline: none;"
+    >
+      {#each categories as category}
+        <option value={category}>{category === 'All' ? 'All Categories' : category}</option>
+      {/each}
+    </select>
   </div>
 
   {#if errorMessage}
-    <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
+    <div style="padding: 0.75rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 0.375rem; font-size: 0.875rem; margin-bottom: 1rem;">
       {errorMessage}
     </div>
   {/if}
 
   {#if isLoading}
-    <div class="text-center py-12 text-gray-500 text-sm">Loading clubs...</div>
+    <div style="padding: 2rem 0; color: #6b7280; font-size: 0.875rem;">Loading clubs...</div>
   {:else if filteredClubs.length === 0}
-    <div class="bg-white border border-gray-200 rounded-lg p-6 text-center text-gray-500 text-sm">
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; color: #6b7280; font-size: 0.875rem;">
       No clubs found matching your search and category selection.
     </div>
   {:else}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; text-align: left;">
       {#each filteredClubs as club (club.id)}
         <ClubCard {club} />
       {/each}

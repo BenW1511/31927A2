@@ -39,7 +39,6 @@
     }
   }
 
-  // Filter events dynamically based on search query and category selection
   let filteredEvents = $derived(
     events.filter((ev) => {
       const q = searchQuery.toLowerCase();
@@ -51,7 +50,7 @@
 
       const matchesCategory =
         selectedCategory === 'All' ||
-        String(ev.type || '').toLowerCase() === selectedCategory.toLowerCase();
+        String((ev as any).type || '').toLowerCase() === selectedCategory.toLowerCase();
 
       return matchesSearch && matchesCategory;
     })
@@ -68,79 +67,73 @@
   onMount(loadEvents);
 </script>
 
-<div class="space-y-6">
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-    <div>
-      <h1 class="text-3xl font-bold text-gray-900">Campus Events</h1>
-      <p class="text-gray-600 text-sm">Discover upcoming student activities and society gatherings.</p>
-    </div>
+<div style="max-width: 1000px; margin: 0 auto; padding: 1.5rem; text-align: center;">
+  
+  <div style="margin-bottom: 1.5rem;">
+    <h1 style="font-size: 2.25rem; font-weight: 800; color: #111827; margin-bottom: 0.25rem;">Campus Events</h1>
+    <p style="color: #4b5563; font-size: 0.95rem;">Discover upcoming student activities and society gatherings.</p>
   </div>
 
-  <!-- Filter and Search Bar -->
-  <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-    <div class="flex-grow">
-      <input
-        type="text"
-        bind:value={searchQuery}
-        placeholder="Search events by title, location, or host club..."
-        class="w-full border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      />
-    </div>
+  <!-- Search and Category Filters -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+    <input
+      type="text"
+      bind:value={searchQuery}
+      placeholder="Search events by title, location, or host club..."
+      style="width: 100%; max-width: 380px; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none;"
+    />
 
-    <div class="w-full sm:w-48">
-      <select
-        bind:value={selectedCategory}
-        class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-      >
-        {#each categories as category}
-          <option value={category}>{category === 'All' ? 'All Categories' : category}</option>
-        {/each}
-      </select>
-    </div>
+    <select
+      bind:value={selectedCategory}
+      style="border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; background: #ffffff; outline: none;"
+    >
+      {#each categories as category}
+        <option value={category}>{category === 'All' ? 'All Categories' : category}</option>
+      {/each}
+    </select>
   </div>
 
   {#if errorMessage}
-    <div class="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm">
+    <div style="padding: 0.75rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 0.375rem; font-size: 0.875rem; margin-bottom: 1rem;">
       {errorMessage}
     </div>
   {/if}
 
   {#if isLoading}
-    <div class="text-center py-12 text-gray-500 text-sm">Loading upcoming events...</div>
+    <div style="padding: 2rem 0; color: #6b7280; font-size: 0.875rem;">Loading upcoming events...</div>
   {:else if filteredEvents.length === 0}
-    <div class="bg-white border border-gray-200 rounded-lg p-6 text-center text-gray-500 text-sm">
-      No events found matching your criteria.
+    <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; color: #6b7280; font-size: 0.875rem;">
+      No events found matching your search and category selection.
     </div>
   {:else}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; text-align: left;">
       {#each filteredEvents as ev (ev.id)}
-        <div class="bg-white border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-4">
-          <div class="space-y-2">
-            <div class="flex justify-between items-start">
-              <span class="text-xs font-semibold text-indigo-600 uppercase tracking-wide">
+        <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.25rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="margin-bottom: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.75rem; font-weight: 700; color: #4f46e5; text-transform: uppercase;">
                 {ev.clubName || 'Campus Event'}
               </span>
               <button
                 onclick={() => handleVote(ev.id)}
-                class="flex items-center space-x-1 px-2.5 py-1 rounded text-xs font-medium border transition {ev.userVoted ? 'bg-indigo-600 text-white border-indigo-600' : 'border-indigo-200 text-indigo-600 hover:bg-indigo-50'}"
+                style="background-color: {ev.userVoted ? '#4f46e5' : '#ffffff'}; color: {ev.userVoted ? '#ffffff' : '#4f46e5'}; border: 1px solid #c7d2fe; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; cursor: pointer;"
               >
-                <span>▲ Upvote</span>
-                <span class="font-bold">{ev.upvotes || 0}</span>
+                ▲ Upvote {ev.upvotes || 0}
               </button>
             </div>
 
-            <h2 class="text-xl font-bold text-gray-900">{ev.title}</h2>
-            <p class="text-gray-600 text-sm line-clamp-3">{ev.description}</p>
+            <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0;">{ev.title}</h2>
+            <p style="color: #4b5563; font-size: 0.875rem; margin: 0; line-height: 1.4;">{ev.description}</p>
           </div>
 
-          <div class="space-y-3 pt-3 border-t border-gray-100 text-xs text-gray-500">
-            <div>📍 <strong>Location:</strong> {ev.location}</div>
-            <div>📅 <strong>Time:</strong> {formatDate(ev.startTime || (ev as any).date)}</div>
+          <div style="padding-top: 0.75rem; border-top: 1px solid #f3f4f6; font-size: 0.75rem; color: #6b7280;">
+            <div style="margin-bottom: 0.25rem;">📍 <strong>Location:</strong> {ev.location}</div>
+            <div style="margin-bottom: 0.75rem;">📅 <strong>Time:</strong> {formatDate(ev.startTime || (ev as any).date)}</div>
 
-            <div class="pt-2 flex justify-between items-center">
+            <div>
               <a
                 href="/events/{ev.id}"
-                class="text-indigo-600 font-semibold hover:underline"
+                style="color: #4f46e5; font-weight: 700; text-decoration: none;"
               >
                 Discuss & Details &rarr;
               </a>

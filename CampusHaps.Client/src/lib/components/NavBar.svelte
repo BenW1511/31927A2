@@ -8,38 +8,45 @@
   }
 </script>
 
-<header class="bg-indigo-600 text-white shadow-md">
-  <div class="container mx-auto px-4 max-w-6xl flex justify-between items-center h-16">
-    <div class="flex items-center space-x-6">
-      <a href="/" class="text-xl font-bold tracking-tight hover:text-indigo-100 flex items-center gap-2">
+<header style="background-color: #3b82f6; color: white; padding: 1rem 0; width: 100%;">
+  <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; text-align: center;">
+    
+    <!-- Top Row: CampusHaps Brand -->
+    <div style="margin-bottom: 0.75rem;">
+      <a href="/" style="font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
         <span>🎓</span> CampusHaps
       </a>
-      <nav class="flex space-x-4 text-sm font-medium">
-        <a href="/" class="hover:text-indigo-200 transition">Events</a>
-        <a href="/clubs" class="hover:text-indigo-200 transition">Clubs</a>
-        <a href="/calendar" class="hover:text-indigo-200 transition">Calendar</a>
-      </nav>
     </div>
 
-    <div class="flex items-center space-x-4 text-sm">
-      {#if $currentUser}
-        <span class="text-indigo-200">
-          <strong class="text-white">{$currentUser.name}</strong> ({$currentUser.role})
-        </span>
-        <button
-          onclick={handleLogout}
-          class="bg-indigo-700 hover:bg-indigo-800 text-white px-3 py-1.5 rounded-md font-medium text-xs border border-indigo-500 transition"
-        >
-          Sign Out
-        </button>
-      {:else}
-        <a
-          href="/login"
-          class="bg-white text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-md font-medium text-xs transition"
-        >
-          Sign In
-        </a>
-      {/if}
-    </div>
+    <!-- Bottom Row: Nav Links & Auth Button Spaced Evenly Across the Top -->
+    <nav style="display: flex; justify-content: space-around; align-items: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.75rem;">
+      <a href="/" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Events</a>
+      <a href="/clubs" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Clubs</a>
+      <a href="/calendar" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Calendar</a>
+
+      <div>
+        {#if $currentUser}
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="font-size: 0.875rem;">
+              <strong>{$currentUser.name}</strong> ({$currentUser.role})
+            </span>
+            <button
+              onclick={handleLogout}
+              style="background-color: #ffffff; color: #000000; border: 1px solid #d1d5db; padding: 0.35rem 0.75rem; border-radius: 0.375rem; font-weight: 600; font-size: 0.85rem; cursor: pointer;"
+            >
+              Sign Out
+            </button>
+          </div>
+        {:else}
+          <a
+            href="/login"
+            style="background-color: #ffffff; color: #000000; border: 1px solid #d1d5db; padding: 0.35rem 0.85rem; border-radius: 0.375rem; font-weight: 600; font-size: 0.85rem; text-decoration: none; display: inline-block;"
+          >
+            Sign In
+          </a>
+        {/if}
+      </div>
+    </nav>
+
   </div>
 </header>
