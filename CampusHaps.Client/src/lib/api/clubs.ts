@@ -34,10 +34,10 @@ export async function getClubPosts(clubId: number): Promise<ClubPost[]> {
 }
 
 export async function createClubPost(clubId: number, data: CreateClubPostInput): Promise<ClubPost> {
-  // Parse authorId explicitly into a 32-bit base-10 integer
+  // parse authorId explicitly into a 32-bit base-10 integer
   const parsedId = parseInt(String(data.authorId), 10);
   
-  // Ensure the value fits within C# System.Int32 limits (1 to 2,147,483,647)
+  
   const safeAuthorId = !isNaN(parsedId) && parsedId > 0 && parsedId <= 2147483647 
     ? parsedId 
     : 1;
