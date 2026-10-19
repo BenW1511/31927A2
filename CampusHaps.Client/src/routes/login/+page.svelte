@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { currentUser } from '../../lib/stores/userStore';
-
+  //updated to encorporate existing special login logic
   let email = $state('');
   let password = $state('');
   let errorMessage = $state('');
@@ -109,4 +109,4 @@
     </form>
 
   </div>
-</div>
+</div>  
