@@ -64,7 +64,7 @@
   <div style="position: fixed; inset: 0; background-color: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 1rem;">
     <div style="background: #ffffff; border: 1px solid #d1d5db; border-radius: 0.5rem; width: 100%; max-width: 480px; padding: 1.75rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); position: relative; text-align: left;">
       
-      <!-- Close Button -->
+    
       <button
         type="button"
         onclick={onclose}
@@ -138,7 +138,7 @@
           ></textarea>
         </div>
 
-        <!-- Action Buttons: Clear background, black text, clean borders -->
+       
         <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 0.5rem;">
           <button
             type="button"
