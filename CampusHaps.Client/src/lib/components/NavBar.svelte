@@ -11,18 +11,38 @@
 <header style="background-color: #3b82f6; color: white; padding: 1rem 0; width: 100%;">
   <div style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; text-align: center;">
     
-    <!-- Top Row: CampusHaps Brand -->
+    <!-- Top Row: CampusHaps Brand Title -->
     <div style="margin-bottom: 0.75rem;">
-      <a href="/" style="font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+      <a 
+        href="/" 
+        style="font-size: 1.5rem; font-weight: 700; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;"
+      >
         <span>🎓</span> CampusHaps
       </a>
     </div>
 
-    <!-- Bottom Row: Nav Links & Auth Button Spaced Evenly Across the Top -->
-    <nav style="display: flex; justify-content: space-around; align-items: center; width: 100%; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 0.75rem;">
-      <a href="/" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Events</a>
-      <a href="/clubs" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Clubs</a>
-      <a href="/calendar" style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;">Calendar</a>
+    <!-- Bottom Row: Navigation Links & Auth Button Spaced Evenly -->
+    <nav style="display: flex; justify-content: space-around; align-items: center; width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.2); padding-top: 0.75rem;">
+      <a 
+        href="/events" 
+        style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;"
+      >
+        Events
+      </a>
+
+      <a 
+        href="/clubs" 
+        style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;"
+      >
+        Clubs
+      </a>
+
+      <a 
+        href="/calendar" 
+        style="color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem;"
+      >
+        Calendar
+      </a>
 
       <div>
         {#if $currentUser}

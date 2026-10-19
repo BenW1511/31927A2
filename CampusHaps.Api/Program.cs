@@ -42,7 +42,6 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection();
-//<>ben changed this
 
 app.UseCors("Client");
 

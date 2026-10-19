@@ -19,17 +19,37 @@
     isLoading = true;
 
     try {
-      // Directly update the currentUser writable store
-      currentUser.set({
-        id: 1,
-        name: email.split('@')[0] || 'Test Student',
-        email: email,
-        role: 'student'
+      const response = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password
+        })
       });
 
-      goto('/');
+      if (response.ok) {
+        const user = await response.json();
+
+        // Populate your existing Svelte store with real user data from backend
+        currentUser.set({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: 'student'
+        });
+
+        await goto('/');
+      } else if (response.status === 401) {
+        const text = await response.text();
+        errorMessage = text || 'Invalid email or password.';
+      } else {
+        errorMessage = 'An unexpected error occurred. Please try again.';
+      }
     } catch (err: any) {
-      errorMessage = err?.message || 'Login failed.';
+      errorMessage = 'Unable to connect to server. Please try again.';
     } finally {
       isLoading = false;
     }
@@ -59,7 +79,8 @@
           id="email"
           type="email"
           bind:value={email}
-          placeholder="student1@example.com"
+          placeholder="student@university.edu.au"
+          disabled={isLoading}
           style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none; box-sizing: border-box;"
         />
       </div>
@@ -73,6 +94,7 @@
           type="password"
           bind:value={password}
           placeholder="••••••••"
+          disabled={isLoading}
           style="width: 100%; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none; box-sizing: border-box;"
         />
       </div>

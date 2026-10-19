@@ -1,11 +1,14 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { getClubs } from '../../lib/api/clubs';
+  import { getEvents } from '../../lib/api/events';
   import type { Club } from '../../lib/types/club';
+  import type { Event as CampusEvent } from '../../lib/types/event';
   import ClubCard from '../../lib/components/clubs/ClubCard.svelte';
   import CreateClubModal from '../../lib/components/clubs/CreateClubModal.svelte';
 
   let clubs = $state<Club[]>([]);
+  let events = $state<CampusEvent[]>([]);
   let searchQuery = $state('');
   let selectedCategory = $state('All');
   let isLoading = $state(true);
@@ -22,20 +25,25 @@
     'Social'
   ];
 
-  async function loadClubs() {
+  async function loadData() {
     isLoading = true;
     errorMessage = '';
     try {
-      clubs = await getClubs();
+      const [fetchedClubs, fetchedEvents] = await Promise.all([
+        getClubs(),
+        getEvents()
+      ]);
+      clubs = fetchedClubs;
+      events = fetchedEvents;
     } catch (err: any) {
-      errorMessage = 'Failed to load clubs. Please ensure the backend API is running.';
+      errorMessage = 'Failed to load clubs and events. Please ensure the backend API is running.';
       console.error(err);
     } finally {
       isLoading = false;
     }
   }
 
-  onMount(loadClubs);
+  onMount(loadData);
 
   let filteredClubs = $derived(
     clubs.filter((club) => {
@@ -54,33 +62,29 @@
   );
 </script>
 
-<!-- Center Aligned Container -->
-<div style="max-width: 1000px; margin: 0 auto; padding: 1.5rem; text-align: center;">
+<div style="max-width: 900px; margin: 0 auto; padding: 1.5rem; text-align: center;">
   
   <div style="margin-bottom: 1.5rem;">
     <h1 style="font-size: 2.25rem; font-weight: 800; color: #111827; margin-bottom: 0.25rem;">Campus Clubs</h1>
     <p style="color: #4b5563; font-size: 0.95rem;">Explore active university societies and student groups.</p>
     
-    <!-- White background, black font Create Club button -->
     <div style="margin-top: 1rem;">
       <button
         onclick={() => (isModalOpen = true)}
-        style="background-color: #ffffff; color: #000000; border: 1px solid #d1d5db; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; font-size: 0.875rem; cursor: pointer; transition: background-color 0.2s;"
-        onmouseover={(e) => (e.currentTarget.style.backgroundColor = '#f9fafb')}
-        onmouseleave={(e) => (e.currentTarget.style.backgroundColor = '#ffffff')}
+        style="background-color: #ffffff; color: #000000; border: 1px solid #d1d5db; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 600; font-size: 0.875rem; cursor: pointer;"
       >
         + Create New Club
       </button>
     </div>
   </div>
 
-  <!-- Search and Category Filters -->
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+  <!-- Search & Category Filter -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 2rem;">
     <input
       type="text"
       bind:value={searchQuery}
       placeholder="Search clubs by name or keywords..."
-      style="width: 100%; max-width: 380px; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none;"
+      style="width: 100%; max-width: 400px; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none;"
     />
 
     <select
@@ -106,9 +110,9 @@
       No clubs found matching your search and category selection.
     </div>
   {:else}
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; text-align: left;">
+    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
       {#each filteredClubs as club (club.id)}
-        <ClubCard {club} />
+        <ClubCard {club} {events} />
       {/each}
     </div>
   {/if}
@@ -116,6 +120,6 @@
   <CreateClubModal
     isOpen={isModalOpen}
     onclose={() => (isModalOpen = false)}
-    onclubCreated={loadClubs}
+    onclubCreated={loadData}
   />
 </div>

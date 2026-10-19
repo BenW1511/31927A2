@@ -10,7 +10,15 @@
   let isLoading = $state(true);
   let errorMessage = $state('');
 
-  const categories = ['All', 'Social', 'Technology', 'Academic', 'Sport', 'Other'];
+  const categories = ['All', 'Sport', 'Academic', 'Social', 'Club', 'Other'];
+
+  const eventTypeMap: Record<number, string> = {
+    0: 'Sport',
+    1: 'Academic',
+    2: 'Social',
+    3: 'Club',
+    4: 'Other'
+  };
 
   async function loadEvents() {
     isLoading = true;
@@ -25,18 +33,33 @@
     }
   }
 
-  async function handleVote(eventId: number) {
+  async function handleVote(eventId: number, currentVotedStatus?: boolean) {
     if (!$currentUser) return;
+
     try {
-      const res = await toggleVote(eventId, $currentUser.id);
+      const res = await toggleVote(eventId, $currentUser.id, !!currentVotedStatus);
       events = events.map((ev) =>
         ev.id === eventId
-          ? { ...ev, upvotes: res.upvotes, userVoted: res.userVoted }
+          ? {
+              ...ev,
+              upvotes: res.upvotes,
+              userVoted: res.userVoted
+            }
           : ev
       );
     } catch (err) {
-      console.error('Failed to toggle vote:', err);
+      console.error('Failed to register vote:', err);
     }
+  }
+
+  function getCategoryName(rawType: any): string {
+    if (typeof rawType === 'number') return eventTypeMap[rawType] || 'Other';
+    if (typeof rawType === 'string') {
+      const parsed = parseInt(rawType, 10);
+      if (!isNaN(parsed)) return eventTypeMap[parsed] || 'Other';
+      return rawType;
+    }
+    return 'Other';
   }
 
   let filteredEvents = $derived(
@@ -48,9 +71,10 @@
         (ev.location && ev.location.toLowerCase().includes(q)) ||
         (ev.clubName && ev.clubName.toLowerCase().includes(q));
 
+      const eventCategoryName = getCategoryName((ev as any).type);
       const matchesCategory =
         selectedCategory === 'All' ||
-        String((ev as any).type || '').toLowerCase() === selectedCategory.toLowerCase();
+        eventCategoryName.toLowerCase() === selectedCategory.toLowerCase();
 
       return matchesSearch && matchesCategory;
     })
@@ -67,20 +91,24 @@
   onMount(loadEvents);
 </script>
 
-<div style="max-width: 1000px; margin: 0 auto; padding: 1.5rem; text-align: center;">
+<div style="max-width: 900px; margin: 0 auto; padding: 1.5rem; text-align: center;">
   
-  <div style="margin-bottom: 1.5rem;">
-    <h1 style="font-size: 2.25rem; font-weight: 800; color: #111827; margin-bottom: 0.25rem;">Campus Events</h1>
-    <p style="color: #4b5563; font-size: 0.95rem;">Discover upcoming student activities and society gatherings.</p>
+  <div style="margin-bottom: 2rem;">
+    <h1 style="font-size: 2.25rem; font-weight: 800; color: #111827; margin-bottom: 0.5rem;">
+      Campus Events
+    </h1>
+    <p style="color: #4b5563; font-size: 1rem; margin: 0;">
+      Discover upcoming student activities, vote on society events, and join the conversation.
+    </p>
   </div>
 
-  <!-- Search and Category Filters -->
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+  <!-- Search & Category Filter -->
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 2rem;">
     <input
       type="text"
       bind:value={searchQuery}
       placeholder="Search events by title, location, or host club..."
-      style="width: 100%; max-width: 380px; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none;"
+      style="width: 100%; max-width: 400px; border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; outline: none;"
     />
 
     <select
@@ -94,7 +122,7 @@
   </div>
 
   {#if errorMessage}
-    <div style="padding: 0.75rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 0.375rem; font-size: 0.875rem; margin-bottom: 1rem;">
+    <div style="padding: 0.75rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: 0.375rem; font-size: 0.875rem; margin-bottom: 1.5rem;">
       {errorMessage}
     </div>
   {/if}
@@ -106,39 +134,47 @@
       No events found matching your search and category selection.
     </div>
   {:else}
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; text-align: left;">
+    <!-- Single Column Stacked List -->
+    <div style="display: flex; flex-direction: column; gap: 1.25rem; text-align: left;">
       {#each filteredEvents as ev (ev.id)}
-        <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.25rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between;">
-          <div style="margin-bottom: 1rem;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-              <span style="font-size: 0.75rem; font-weight: 700; color: #4f46e5; text-transform: uppercase;">
+        <div style="background: #ffffff; border: 1px solid #d1d5db; border-radius: 0.5rem; padding: 1.25rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+          
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 700; color: #4f46e5; text-transform: uppercase;">
                 {ev.clubName || 'Campus Event'}
               </span>
-              <button
-                onclick={() => handleVote(ev.id)}
-                style="background-color: {ev.userVoted ? '#4f46e5' : '#ffffff'}; color: {ev.userVoted ? '#ffffff' : '#4f46e5'}; border: 1px solid #c7d2fe; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; font-weight: 600; cursor: pointer;"
-              >
-                ▲ Upvote {ev.upvotes || 0}
-              </button>
+              <span style="background-color: #f3f4f6; color: #4b5563; font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.4rem; border-radius: 0.25rem;">
+                {getCategoryName((ev as any).type)}
+              </span>
             </div>
 
-            <h2 style="font-size: 1.25rem; font-weight: 700; color: #111827; margin: 0 0 0.5rem 0;">{ev.title}</h2>
-            <p style="color: #4b5563; font-size: 0.875rem; margin: 0; line-height: 1.4;">{ev.description}</p>
+            <!-- Single Upvote Button -->
+            <button
+              onclick={() => handleVote(ev.id, ev.userVoted)}
+              style="background-color: {ev.userVoted ? '#e0e7ff' : '#ffffff'}; color: #000000; border: 1px solid #d1d5db; padding: 0.25rem 0.6rem; border-radius: 0.375rem; font-size: 0.8rem; font-weight: 700; cursor: pointer;"
+            >
+              ▲ Upvote {ev.upvotes || 0}
+            </button>
           </div>
 
-          <div style="padding-top: 0.75rem; border-top: 1px solid #f3f4f6; font-size: 0.75rem; color: #6b7280;">
-            <div style="margin-bottom: 0.25rem;">📍 <strong>Location:</strong> {ev.location}</div>
-            <div style="margin-bottom: 0.75rem;">📅 <strong>Time:</strong> {formatDate(ev.startTime || (ev as any).date)}</div>
+          <h2 style="font-size: 1.35rem; font-weight: 800; color: #111827; margin: 0 0 0.5rem 0;">{ev.title}</h2>
+          <p style="color: #374151; font-size: 0.925rem; margin: 0 0 1rem 0; line-height: 1.5;">{ev.description}</p>
 
-            <div>
-              <a
-                href="/events/{ev.id}"
-                style="color: #4f46e5; font-weight: 700; text-decoration: none;"
-              >
-                Discuss & Details &rarr;
-              </a>
+          <div style="padding-top: 0.75rem; border-top: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #6b7280;">
+            <div style="display: flex; gap: 1.5rem;">
+              <span>📍 <strong>Location:</strong> {ev.location}</span>
+              <span>📅 <strong>Time:</strong> {formatDate(ev.startTime || (ev as any).date)}</span>
             </div>
+
+            <a
+              href="/events/{ev.id}"
+              style="color: #000000; font-weight: 700; text-decoration: underline;"
+            >
+              Discuss & Details &rarr;
+            </a>
           </div>
+
         </div>
       {/each}
     </div>
