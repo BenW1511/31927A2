@@ -8,7 +8,7 @@
 
   let { clubId, onEventCreated }: Props = $props();
 
-  // Form Field States
+  // Form field states
   let title = $state('');
   let description = $state('');
   let location = $state('');
@@ -17,7 +17,7 @@
   let ticketUrl = $state('');
   let type = $state<EventType>(EventType.Social);
 
-  // UI States
+  // UI states
   let isExpanded = $state(false);
   let isLoading = $state(false);
   let errorMessage = $state('');
@@ -123,7 +123,7 @@
         </div>
       {/if}
 
-      <!-- Title Input -->
+      //Title input
       <div>
         <label for="title" style="display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
           Event Title *
@@ -139,7 +139,7 @@
         />
       </div>
 
-      <!-- Description Input -->
+      //Description input
       <div>
         <label for="description" style="display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
           Description
@@ -155,7 +155,7 @@
         ></textarea>
       </div>
 
-      <!-- Location & Type Grid -->
+      //Location and type grid -->
       <div style="display: flex; gap: 0.75rem;">
         <div style="flex: 2;">
           <label for="location" style="display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
@@ -191,7 +191,7 @@
         </div>
       </div>
 
-      <!-- Start and End Time Grid -->
+      //start and end time grid
       <div style="display: flex; gap: 0.75rem;">
         <div style="flex: 1;">
           <label for="startTime" style="display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
@@ -220,7 +220,7 @@
         </div>
       </div>
 
-      <!-- Ticket URL -->
+      //ticket url
       <div>
         <label for="ticketUrl" style="display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
           Ticket / Link URL
@@ -236,7 +236,7 @@
         />
       </div>
 
-      <!-- Action Button -->
+      
       <button
         type="submit"
         disabled={isLoading}
