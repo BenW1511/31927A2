@@ -155,7 +155,7 @@
         ></textarea>
       </div>
 
-      //Location and type grid -->
+      //Location and type grid
       <div style="display: flex; gap: 0.75rem;">
         <div style="flex: 2;">
           <label for="location" style="display: block; font-size: 0.8rem; font-weight: 600; color: #374151; margin-bottom: 0.25rem;">
