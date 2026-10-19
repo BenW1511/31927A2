@@ -39,7 +39,7 @@
   <h2 style="font-size: 1.35rem; font-weight: 800; color: #111827; margin: 0 0 0.5rem 0;">{club.name}</h2>
   <p style="color: #374151; font-size: 0.925rem; margin: 0 0 1rem 0; line-height: 1.5;">{club.description}</p>
 
-  <!-- Upcoming Events Preview Section -->
+  <!-- Upcoming events preview section -->
   <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.375rem; padding: 0.85rem; margin-bottom: 1rem;">
     <div style="font-size: 0.75rem; font-weight: 700; color: #4b5563; text-transform: uppercase; margin-bottom: 0.5rem;">
       📅 Upcoming Events ({clubEvents.length})
